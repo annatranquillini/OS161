@@ -25,25 +25,11 @@
 void
 sys__exit(int status)
 {
-#if OPT_WAITPID
-  struct proc *p = curproc;
 
- // p->p_status; p// puntatore
-  //*p //oggetto in sè
-
-  //struct proc p;
-
-  //p //oggento in sè
-  //&p //puntatore
-
-  p->p_status = status & 0xff; /* just lower 8 bits returned */
-  proc_remthread(curthread);
-  proc_signal_end(p);
-#else
   /* get address space of current process and destroy */
   struct addrspace *as = proc_getas();
   as_destroy(as);
-#endif
+
   thread_exit();
 
   panic("thread_exit returned (should not happen)\n");
@@ -53,32 +39,20 @@ sys__exit(int status)
 int
 sys_waitpid(pid_t pid, userptr_t statusp, int options)
 {
-#if OPT_WAITPID
-  struct proc *p = proc_search_pid(pid);
-  int s;
-  (void)options; /* not handled */
-  if (p==NULL) return -1;
-  s = proc_wait(p);
-  if (statusp!=NULL) 
-    *(int*)statusp = s;
-  return pid;
-#else
+
   (void)options; /* not handled */
   (void)pid;
   (void)statusp;
   return -1;
-#endif
+
 }
 
 pid_t
 sys_getpid(void)
 {
-#if OPT_WAITPID
-  KASSERT(curproc != NULL);
-  return curproc->p_pid;
-#else
+
   return -1;
-#endif
+
 }
 
 #if OPT_FORK

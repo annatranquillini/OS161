@@ -50,7 +50,7 @@
 #include <test.h>
 #include <version.h>
 #include "autoconf.h"  // for pseudoconfig
-#include "opt-paging.h"
+
 
 
 /*
@@ -210,9 +210,6 @@ void
 kmain(char *arguments)
 {
 	boot();
-#if OPT_PAGING
-	kprintf("-> VERSION with PAGING\n");
-#endif
 	menu(arguments);
 
 	/* Should not get here */

@@ -114,10 +114,7 @@ common_prog(int nargs, char **args)
 {
 	struct proc *proc;
 	int result;
-#if OPT_WAITPID
-	int retpid;
-	userptr_t exitcode=NULL;
-#endif
+
 
 	/* Create a process for the new program to run in. */
 	proc = proc_create_runprogram(args[0] /* name */);
@@ -129,12 +126,7 @@ common_prog(int nargs, char **args)
 			proc /* new process */,
 			cmd_progthread /* thread function */,
 			args /* thread arg */, nargs /* thread arg */);
-#if OPT_WAITPID
-	retpid=proc_wait(proc);
-	//retpid=sys_waitpid(proc->p_pid, exitcode,1);
-	(void)retpid;
-	(void)exitcode;
-#endif
+
 	if (result) {
 		kprintf("thread_fork failed: %s\n", strerror(result));
 		proc_destroy(proc);
