@@ -445,19 +445,7 @@ optfile net	test/nettest.c
 #                                      #
 ########################################
 
-defoption paging
-optfile	paging	vm/coremap.c
-optfile	paging	vm/pt.c
-optfile	paging	vm/segments.c
-optfile	paging	vm/swapfile.c
-optfile	paging	vm/vmstats.c
-optfile	paging	vm/vm_tlb.c
 
 defoption syscalls
 optfile syscalls syscall/proc_syscalls.c
 optfile syscalls syscall/file_syscalls.c
-
-defoption synch
-defoption waitpid
-defoption fork
-defoption file
