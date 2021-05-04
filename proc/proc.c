@@ -180,9 +180,7 @@ proc_create(const char *name)
 	proc->p_cwd = NULL;
 
 	proc_init_waitpid(proc,name);
-#if OPT_FILE
-        bzero(proc->fileTable,OPEN_MAX*sizeof(struct openfile *));
-#endif
+
 	return proc;
 }
 
@@ -431,59 +429,3 @@ proc_setas(struct addrspace *newas)
 
 
 
-        /* G.Cabodi - 2019 - support for waitpid */
-int 
-proc_wait(struct proc *proc)
-{
-#if OPT_WAITPID
-        int return_status;
-        /* NULL and kernel proc forbidden */
-	KASSERT(proc != NULL);
-	KASSERT(proc != kproc);
-
-        /* wait on semaphore or condition variable */ 
-#if USE_SEMAPHORE_FOR_WAITPID
-        P(proc->p_sem);
-#else
-        lock_acquire(proc->p_lock);
-        cv_wait(proc->p_cv);
-        lock_release(proc->p_lock);
-#endif
-        return_status = proc->p_status;
-        proc_destroy(proc);
-        return return_status;
-#else
-        /* this doesn't synchronize */ 
-        (void)proc;
-        return 0;
-#endif
-}
-
-
-/* G.Cabodi - 2019 - support for waitpid */
-void
-proc_signal_end(struct proc *proc)
-{
-#if USE_SEMAPHORE_FOR_WAITPID
-      V(proc->p_sem);
-#else
-      lock_acquire(proc->p_lock);
-      cv_signal(proc->p_cv);
-      lock_release(proc->p_lock);
-#endif
-}
-
-#if OPT_FILE
-void 
-proc_file_table_copy(struct proc *psrc, struct proc *pdest) {
-  int fd;
-  for (fd=0; fd<OPEN_MAX; fd++) {
-    struct openfile *of = psrc->fileTable[fd];
-    pdest->fileTable[fd] = of;
-    if (of != NULL) {
-      /* incr reference count */
-      openfileIncrRefCount(of);
-    }
-  }
-}
-#endif
