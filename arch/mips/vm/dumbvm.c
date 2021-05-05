@@ -330,7 +330,7 @@ vm_fault(int faulttype, vaddr_t faultaddress)
 		/*paddr__________
 		_____dirty_____
 		__________valid
-		paddredirtyvalid*/
+		paddrdirtyvalid*/
 		DEBUG(DB_VM, "dumbvm: 0x%x -> 0x%x\n", faultaddress, paddr);
 		tlb_write(ehi, elo, i);
 		splx(spl);
