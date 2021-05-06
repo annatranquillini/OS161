@@ -8,7 +8,4 @@ file_syscalls.o: ../../syscall/file_syscalls.c ../../include/types.h \
  ../../include/array.h ../../include/lib.h opt-noasserts.h \
  ../../include/spinlock.h includelinks/machine/spinlock.h \
  ../../include/threadlist.h includelinks/machine/thread.h \
- ../../include/setjmp.h includelinks/kern/machine/setjmp.h \
- ../../include/copyinout.h ../../include/vnode.h ../../include/vfs.h \
- ../../include/limits.h ../../include/kern/limits.h ../../include/uio.h \
- ../../include/kern/iovec.h ../../include/proc.h opt-waitpid.h
+ ../../include/setjmp.h includelinks/kern/machine/setjmp.h
