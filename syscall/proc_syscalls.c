@@ -35,23 +35,3 @@ sys__exit(int status)
   panic("thread_exit returned (should not happen)\n");
   (void) status; // TODO: status handling
 }
-
-int
-sys_waitpid(pid_t pid, userptr_t statusp, int options)
-{
-
-  (void)options; /* not handled */
-  (void)pid;
-  (void)statusp;
-  return -1;
-
-}
-
-pid_t
-sys_getpid(void)
-{
-
-  return -1;
-
-}
-
