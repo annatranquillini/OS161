@@ -180,9 +180,6 @@ proc_create(const char *name)
 	proc->p_cwd = NULL;
 
 	proc_init_waitpid(proc,name);
-#if OPT_FILE
-        bzero(proc->fileTable,OPEN_MAX*sizeof(struct openfile *));
-#endif
 	return proc;
 }
 
@@ -473,17 +470,3 @@ proc_signal_end(struct proc *proc)
 #endif
 }
 
-#if OPT_FILE
-void 
-proc_file_table_copy(struct proc *psrc, struct proc *pdest) {
-  int fd;
-  for (fd=0; fd<OPEN_MAX; fd++) {
-    struct openfile *of = psrc->fileTable[fd];
-    pdest->fileTable[fd] = of;
-    if (of != NULL) {
-      /* incr reference count */
-      openfileIncrRefCount(of);
-    }
-  }
-}
-#endif

@@ -92,9 +92,6 @@ struct proc {
         struct lock *p_lock;
 #endif
 #endif
-#if OPT_FILE
-        struct openfile *fileTable[OPEN_MAX];
-#endif
 };
 
 /* This is the process structure for the kernel and for kernel-only threads. */
@@ -127,7 +124,5 @@ int proc_wait(struct proc *proc);
 struct proc *proc_search_pid(pid_t pid);
 /* signal end/exit of process */
 void proc_signal_end(struct proc *proc);
-#if OPT_FILE
-void proc_file_table_copy(struct proc *psrc, struct proc *pdest);
-#endif
+
 #endif /* _PROC_H_ */

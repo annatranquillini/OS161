@@ -33,4 +33,3 @@ options dumbvm			# Chewing gum and baling wire.
 options syscalls
 options synch
 options waitpid
-options file

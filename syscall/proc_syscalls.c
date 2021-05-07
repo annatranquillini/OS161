@@ -27,15 +27,6 @@ sys__exit(int status)
 {
 #if OPT_WAITPID
   struct proc *p = curproc;
-
- // p->p_status; p// puntatore
-  //*p //oggetto in sè
-
-  //struct proc p;
-
-  //p //oggento in sè
-  //&p //puntatore
-
   p->p_status = status & 0xff; /* just lower 8 bits returned */
   proc_remthread(curthread);
   proc_signal_end(p);
