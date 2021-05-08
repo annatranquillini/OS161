@@ -131,7 +131,7 @@ common_prog(int nargs, char **args)
 			args /* thread arg */, nargs /* thread arg */);
 #if OPT_WAITPID
 	retpid=proc_wait(proc);
-	//retpid=sys_waitpid(proc->p_pid, exitcode,1);
+	//retpid=sys_waitpid(proc->p_pid);
 	(void)retpid;
 	(void)exitcode;
 #endif
